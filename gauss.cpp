@@ -9,6 +9,14 @@ double *bG;
 double detG;
 void prepare(double **matrix, int n, double *b)
 {
+
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<n;j++)
+            cout<<matrix[i][j]<<' ';
+        cout<<b[i]<<'\n';
+    }
+    cout<<"<<<<<<<<<<<<<<<<<<"<<'\n';
     double **temMatrix;
     double *bb= new double[n];
     for(int i=0;i<n;i++)
@@ -44,13 +52,30 @@ void prepare(double **matrix, int n, double *b)
             b[i]    = b[i] - matrix[i][k]*b[k];
             matrix[i][k] = 0;
         }
+
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+                cout<<matrix[i][j]<<' ';
+            cout<<b[i]<<'\n';
+        }
+        cout<<">>>>>>>>>>>>>>>>>>>>>"<<'\n';
     }
     matrixG=matrix;
     bG=b;
 }
 
-void gauss(int n, double *b, double *x, double eps, double &epsf, double *epsv)
+void gauss(int n, double *b, double *x, double eps, double &epsf, double *epsv,bool e)
 {
+    if(!e)
+        b=bG;
+
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<n;j++)
+            cout<<matrixG[i][j]<<' ';
+        cout<<b[i]<<'\n';
+    }
     for(int i=n-1;i>=0;i--)
     {
         double sum=0;
