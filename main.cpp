@@ -35,10 +35,13 @@ int main(int argc, char **argv) {
         try {
             double **result;
             if(type==1) {
-                if (solveType==1)
-                    gauss(matrix,n,b,x,eps,epsf,epsv);
-                else
+                if (solveType==1) {
+                    prepare(matrix,n,b);
+                    gauss(n,b,x,eps,epsf,epsv);
+                }
+                else {
                     itern(matrix,n,b,x,eps,epsf,epsv);
+                }
                 cout << "x: ";
                 for(int i=0;i<n;i++)
                     cout <<x[i] << ' ';

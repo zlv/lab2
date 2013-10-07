@@ -11,8 +11,10 @@ void inversed(int t, double **a, int n, double **result, double eps, double &eps
         if (i!=0)
             e[i-1] = 0;
         e[i] = 1;
-        if (t==1)
-            gauss(a,n,e,temp,eps,epsf,epsv);
+        if (t==1) {
+            prepare(a,n,e);
+            gauss(n,e,temp,eps,epsf,epsv);
+        }
         else
             itern(a,n,e,temp,eps,epsf,epsv);
         for (int j=0; j<n; j++)
