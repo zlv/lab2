@@ -4,13 +4,30 @@
 #include <string.h>
 #include <iostream>
 using namespace std;
-void gauss(double **matrix, int n, double *b, double *x, double eps, double &epsf, double *epsv)
+double **matrixG;
+double *bG;
+double detG;
+void prepare(double **matrix, int n, double *b)
 {
-    double det=1;
+    double **temMatrix;
+    double *bb= new double[n];
+    for(int i=0;i<n;i++)
+        bb[i]=b[i];
+    b=bb;
+    temMatrix=new double*[n];
+    for(int i=0;i<n;i++)
+    {
+            temMatrix[i]= new double[n];
+            for(int j=0;j<n;j++) {
+                temMatrix[i][j]=matrix[i][j];
+            }
+    }
+    matrix=temMatrix;
+    detG=1;
     int i,j;
     for(int k = 0; k < n ; k++)
     {
-        det*=matrix[k][k];
+        detG*=matrix[k][k];
         for(j = k + 1; j < n; j++)
         {
             matrix[k][j]=matrix[k][j]/matrix[k][k];
@@ -27,23 +44,19 @@ void gauss(double **matrix, int n, double *b, double *x, double eps, double &eps
             b[i]    = b[i] - matrix[i][k]*b[k];
             matrix[i][k] = 0;
         }
-
-//        for(int i=0;i<n;i++)
-//        {
-//            for(int j=0;j<n;j++)
-//                std::cout<<matrix[i][j]<<' ';
-//            std::cout<<b[i];
-//            std::cout<<'\n';
-//        }
-//        std::cout<<"<<<<<<<<<<<<<<<<<<<<<<"<<'\n';
     }
+    matrixG=matrix;
+    bG=b;
+}
+
+void gauss(int n, double *b, double *x, double eps, double &epsf, double *epsv)
+{
     for(int i=n-1;i>=0;i--)
     {
         double sum=0;
         for(int j=i+1;j<n;j++)
-            sum+=matrix[i][j]*x[j];
+            sum+=matrixG[i][j]*x[j];
         x[i]=b[i]-sum;
     }
-    cout<<det;
 }
 
