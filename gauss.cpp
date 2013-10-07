@@ -85,3 +85,8 @@ void gauss(int n, double *b, double *x, double eps, double &epsf, double *epsv,b
     }
 }
 
+double det()
+{
+    return detG;
+}
+

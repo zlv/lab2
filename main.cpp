@@ -38,6 +38,7 @@ int main(int argc, char **argv) {
                 if (solveType==1) {
                     prepare(matrix,n,b);
                     gauss(n,b,x,eps,epsf,epsv);
+                    cout<<"det: "<<det()<<'\n';
                 }
                 else {
                     itern(matrix,n,b,x,eps,epsf,epsv);
