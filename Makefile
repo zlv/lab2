@@ -1,4 +1,4 @@
-SOURCEOBJS = main.cpp
+SOURCEOBJS = main.cpp itern.cpp
 main :
 	g++ -o lab2 $(SOURCEOBJS)
 main-debug :
