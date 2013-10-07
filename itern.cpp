@@ -2,11 +2,11 @@
 #include <math.h>
 #include <iostream>
 using namespace std;
-void itern(double **a, int n, double *b, double *x, double eps, double &epsf) {
+void itern(double **a, int n, double *b, double *x, double eps, double &epsf, double *epsv) {
     double *betta = new double[n];
     double **alpha = new double*[n];
     double normalpha = 0;
-    //cerr << "alpha:\n";
+    cout << "alpha:\n";
     for (int i=0; i<n; i++) {
         double sum = 0;
         betta[i] = b[i]/a[i][i];
@@ -20,24 +20,28 @@ void itern(double **a, int n, double *b, double *x, double eps, double &epsf) {
                 else {
                     alpha[i][j] = 0;
                 }
-                //cerr << alpha[i][j] << ' ';
+                cout << alpha[i][j] << ' ';
                 normalpha += pow(alpha[i][j],2);
             }
-            //cerr << endl;
+            cout << endl;
         }
         else if (a[i][i]<=sum) {
-            throw invalid_argument("Wrong matrix. |a[i][i]| should be > sum(a[i][j])");
             delete[] betta;
             for (int i=0; i<n; i++) 
                 delete[] alpha[i];
             delete[] alpha;
+            throw invalid_argument("Wrong matrix. |a[i][i]| should be > sum(a[i][j])");
         }
     }
     normalpha = sqrt(normalpha);
-    //cerr << "norm:\n" << normalpha << '\n';
+    cout << "norma alpha: " << normalpha << '\n';
     double *oldx = new double[n];
-    for (int i=0; i<n; i++)
+    cout << "betta: ";
+    for (int i=0; i<n; i++) {
         x[i] = betta[i];
+        cout << x[i] << " ";
+    }
+    cout << endl;
     //int count = 0;
     while (1) {
         for (int i=0; i<n; i++)
@@ -53,8 +57,10 @@ void itern(double **a, int n, double *b, double *x, double eps, double &epsf) {
             //cerr << x[i] << ' ';
         //cerr << endl;
         epsf = 0;
-        for (int i=0; i<n; i++)
-            epsf += pow(x[i]-oldx[i],2);
+        for (int i=0; i<n; i++) {
+            epsv[i] = x[i]-oldx[i];
+            epsf += pow(epsv[i],2);
+        }
         epsf = sqrt(epsf);
         if (epsf<(1-normalpha)*eps/normalpha) break;
     }
@@ -63,4 +69,25 @@ void itern(double **a, int n, double *b, double *x, double eps, double &epsf) {
     for (int i=0; i<n; i++) 
         delete[] alpha[i];
     delete[] alpha;
+}
+
+void iternInversed(double **a, int n, double **result, double eps, double &epsf, double *epsv) {
+    double *e = new double[n];
+    double *temp = new double[n];
+    for (int i=0; i<n; i++)
+        e[i] = 0;
+    for (int i=0; i<n; i++) {
+        if (i!=0)
+            e[i-1] = 0;
+        e[i] = 1;
+        itern(a,n,e,temp,eps,epsf,epsv);
+        for (int j=0; j<n; j++)
+            result[j][i] = temp[j];
+        cout << "\nepsilon vector: ";
+        for(int i=0;i<n;i++)
+            cout << epsv[i] << ' ';
+        cout << "\neps : " << epsf << endl;
+    }
+    delete[] temp;
+    delete[] e;
 }
