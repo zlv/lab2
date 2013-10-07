@@ -6,11 +6,11 @@
 using namespace std;
 void gauss(double **matrix, int n, double *b, double *x, double eps, double &epsf)
 {
-    double v;
+    double det=1;
     int i,j;
     for(int k = 0; k < n ; k++)
     {
-
+        det*=matrix[k][k];
         for(j = k + 1; j < n; j++)
         {
             matrix[k][j]=matrix[k][j]/matrix[k][k];
@@ -19,7 +19,6 @@ void gauss(double **matrix, int n, double *b, double *x, double eps, double &eps
         matrix[k][k]=1;
         for(i = k + 1; i < n; i++)
         {
-            v = matrix[i][k];
             if(matrix[i][k] != 0)
                 for(j = k + 1; j < n; j++)
                 {
@@ -29,14 +28,14 @@ void gauss(double **matrix, int n, double *b, double *x, double eps, double &eps
             matrix[i][k] = 0;
         }
 
-        for(int i=0;i<n;i++)
-        {
-            for(int j=0;j<n;j++)
-                std::cout<<matrix[i][j]<<' ';
-            std::cout<<b[i];
-            std::cout<<'\n';
-        }
-        std::cout<<"<<<<<<<<<<<<<<<<<<<<<<"<<'\n';
+//        for(int i=0;i<n;i++)
+//        {
+//            for(int j=0;j<n;j++)
+//                std::cout<<matrix[i][j]<<' ';
+//            std::cout<<b[i];
+//            std::cout<<'\n';
+//        }
+//        std::cout<<"<<<<<<<<<<<<<<<<<<<<<<"<<'\n';
     }
     for(int i=n-1;i>=0;i--)
     {
@@ -45,5 +44,6 @@ void gauss(double **matrix, int n, double *b, double *x, double eps, double &eps
             sum+=matrix[i][j]*x[j];
         x[i]=b[i]-sum;
     }
+    cout<<det;
 }
 
