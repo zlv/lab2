@@ -1,0 +1,5 @@
+#ifndef FIND_GAUSS
+#define FIND_GAUSS
+double gauss(double ** matrix, double *b,double** eps, double normeps);
+#endif
+

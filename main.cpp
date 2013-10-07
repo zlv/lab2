@@ -25,8 +25,8 @@ int main(int argc, char **argv) {
         double eps=1e-3;
         double epsf;
         try {
-            //if(type==1)
-                    //gauss(matrix,n,b,x,eps,epsf);
+            if(type==1)
+                    gauss(matrix,n,b,x,eps,epsf);
             if(type==2) 
                     itern(matrix,n,b,x,eps,epsf);
             cout << "x: ";
