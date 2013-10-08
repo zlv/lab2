@@ -12,12 +12,13 @@ int main(int argc, char **argv) {
         int type;
         int n;
         double **matrix;
-        double *b;
+        double **b;
         cin >>type;
         cin >> n;
         double *x = new double[n];
         matrix=new double*[n];
-        b= new double[n];
+        b= new double*[1];
+        b[0]= new double[n];
         cout << "matrix input:\n";
         for(int i=0;i<n;i++)
         {
@@ -26,7 +27,7 @@ int main(int argc, char **argv) {
                         cin >> matrix[i][j];
                         cout << matrix[i][j] << ' ';
                 }
-                cin>>b[i];
+                cin>>b[0][i];
                 cout << endl;
         }
         double eps=1e-3;
@@ -37,11 +38,11 @@ int main(int argc, char **argv) {
             if(type==1) {
                 if (solveType==1) {
                     prepare(matrix,n,b);
-                    gauss(n,b,x,eps,epsf,epsv);
+                    gauss(n,0,x,eps,epsf,epsv);
                     cout<<"det: "<<det()<<'\n';
                 }
                 else {
-                    itern(matrix,n,b,x,eps,epsf,epsv);
+                    itern(matrix,n,b[0],x,eps,epsf,epsv);
                 }
                 cout << "x: ";
                 for(int i=0;i<n;i++)
