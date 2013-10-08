@@ -7,17 +7,20 @@
 #include "inverse.h"
 #include <stdexcept>
 using namespace std;
-int solveType = 1;
 int main(int argc, char **argv) {
         int type;
         int n;
         double **matrix;
         double *b;
         cin >>type;
+        int solveType = type<=3?1:2;
+        type=(type-1)%3+1;
         cin >> n;
         double *x = new double[n];
         matrix=new double*[n];
         b= new double[n];
+        double eps=1e-3;
+        cout.precision(-log10(eps));
         cout << "matrix input:\n";
         for(int i=0;i<n;i++)
         {
@@ -29,7 +32,6 @@ int main(int argc, char **argv) {
                 cin>>b[i];
                 cout << endl;
         }
-        double eps=1e-3;
         double epsf=0;
         double *epsv = new double[n];
         try {
