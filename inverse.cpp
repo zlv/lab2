@@ -5,8 +5,11 @@ using namespace std;
 void inversed(int t, double **a, int n, double **result, double eps, double &epsf, double *epsv) {
     double *e = new double[n];
     double *temp = new double[n];
-    for (int i=0; i<n; i++)
+    double **epsm = new double*[n];
+    for (int i=0; i<n; i++) {
+        epsm[i] = new double[n];
         e[i] = 0;
+    }
     e[0]=1;
     for (int i=0; i<n; i++) {
         if (i!=0)
@@ -19,13 +22,19 @@ void inversed(int t, double **a, int n, double **result, double eps, double &eps
         }
         else
             itern(a,n,e,temp,eps,epsf,epsv);
-        for (int j=0; j<n; j++)
+        for (int j=0; j<n; j++) {
             result[j][i] = temp[j];
-        cout << "\nepsilon vector: ";
-        for(int i=0;i<n;i++)
-            cout << epsv[i] << ' ';
-        cout << "\neps : " << epsf << endl;
+            epsm[j][i] = epsv[j];
+        }
     }
+    cout << "\nepsilon matrix:\n";
+    for (int i=0; i<n; i++) {
+        for (int j=0; j<n; j++) {
+            cout << epsm[i][j] << ' ';
+        }
+        cout << endl;
+    }
+    cout << "\neps : " << epsf << endl;
     delete[] temp;
     delete[] e;
 }
