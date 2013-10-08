@@ -4,8 +4,10 @@
 #include <string.h>
 #include <iostream>
 using namespace std;
+double **matrixOld;
 double **matrixG;
 double *bG;
+double *bOld;
 double detG;
 void prepare(double **matrix, int n, double *b)
 {
@@ -16,6 +18,8 @@ void prepare(double **matrix, int n, double *b)
             cout<<matrix[i][j]<<' ';
         cout<<b[i]<<'\n';
     }
+    matrixOld=matrix;
+    bOld=b;
     cout<<"<<<<<<<<<<<<<<<<<<"<<'\n';
     double **temMatrix;
     double *bb= new double[n];
@@ -70,12 +74,6 @@ void gauss(int n, double *b, double *x, double eps, double &epsf, double *epsv,b
     if(!e)
         b=bG;
 
-    for(int i=0;i<n;i++)
-    {
-        for(int j=0;j<n;j++)
-            cout<<matrixG[i][j]<<' ';
-        cout<<b[i]<<'\n';
-    }
     for(int i=n-1;i>=0;i--)
     {
         double sum=0;
@@ -83,6 +81,19 @@ void gauss(int n, double *b, double *x, double eps, double &epsf, double *epsv,b
             sum+=matrixG[i][j]*x[j];
         x[i]=b[i]-sum;
     }
+    double *newB= new double[n];
+    for(int i=0;i<n;i++)
+    {
+        newB[i]=0;
+        for(int j=0;j<n;j++)
+        {
+            newB[i]+=matrixOld[i][j]*x[j];
+        }
+            epsv[i]=bOld[i]-newB[i];
+            epsf += pow(epsv[i],2);
+    }
+        epsf = sqrt(epsf);
+   
 }
 
 double det()

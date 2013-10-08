@@ -30,7 +30,7 @@ int main(int argc, char **argv) {
                 cout << endl;
         }
         double eps=1e-3;
-        double epsf;
+        double epsf=0;
         double *epsv = new double[n];
         try {
             double **result;
