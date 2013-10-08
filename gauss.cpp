@@ -11,12 +11,11 @@ double **bOld;
 double detG;
 void prepare(double **matrix, int n, double **b,int m)
 {
-
     for(int i=0;i<n;i++)
     {
         for(int j=0;j<n;j++)
             cout<<matrix[i][j]<<' ';
-        cout<<b[i]<<'\n';
+        //cout<<b[i]<<'\n';
     }
     matrixOld=matrix;
     cout<<"<<<<<<<<<<<<<<<<<<"<<'\n';
