@@ -55,6 +55,8 @@ int main(int argc, char **argv) {
                 cout << "\neps : " << epsf << endl;
             }
             else if (type==2) {
+                    prepare(matrix,n,b);
+                    cout<<"det: "<<det()<<'\n';
             }
             else if (type==3) {
                 result=new double*[n];
